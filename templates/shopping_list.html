@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+
+{% block title %}Shopping List | RecipeCraft{% endblock %}
+
+{% block content %}
+
+<section class="shopping-section">
+
+    <div class="section-heading">
+        <span class="eyebrow">YOUR KITCHEN CHECKLIST</span>
+        <h1>Shopping List 🛒</h1>
+        <p>Keep track of the ingredients you need.</p>
+    </div>
+
+    <div class="content-card shopping-card">
+
+        <h2>Add an Ingredient</h2>
+
+        <form method="POST"
+              action="{{ url_for('add_shopping') }}"
+              class="shopping-add-form">
+
+            <input
+                type="text"
+                name="ingredient"
+                placeholder="Ingredient name..."
+                required
+            >
+
+            <input
+                type="text"
+                name="quantity"
+                placeholder="Quantity (optional)"
+            >
+
+            <button type="submit" class="primary-btn">
+                + Add
+            </button>
+
+        </form>
+
+        <div class="shopping-heading">
+            <h2>Your Ingredients</h2>
+
+            {% if items %}
+            <form method="POST" action="{{ url_for('clear_shopping') }}"
+                  onsubmit="return confirm('Clear your entire shopping list?');">
+                <button type="submit" class="remove-btn">
+                    Clear All
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if items %}
+
+        <div class="shopping-items">
+
+            {% for item in items %}
+
+            <div class="shopping-item {% if item.checked %}checked-item{% endif %}">
+
+                <form method="POST"
+                      action="{{ url_for('toggle_shopping', item_id=item.id) }}">
+                    <button type="submit" class="check-btn">
+                        {% if item.checked %}☑{% else %}☐{% endif %}
+                    </button>
+                </form>
+
+                <div class="shopping-item-info">
+                    <span class="shopping-name">{{ item.ingredient }}</span>
+                    {% if item.quantity %}
+                    <small>{{ item.quantity }}</small>
+                    {% endif %}
+                </div>
+
+                <form method="POST"
+                      action="{{ url_for('delete_shopping', item_id=item.id) }}">
+                    <button type="submit" class="delete-btn" title="Delete">
+                        ✕
+                    </button>
+                </form>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <p class="shopping-count">
+            {{ items|selectattr('checked', 'equalto', 1)|list|length }}
+            of {{ items|length }} ingredients completed
+        </p>
+
+        {% else %}
+
+        <div class="empty-state">
+            <div class="empty-icon">🛍️</div>
+            <h2>Your shopping list is empty</h2>
+            <p>Add ingredients manually or directly from a recipe.</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

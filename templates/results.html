@@ -1,0 +1,114 @@
+
+{% extends "base.html" %}
+
+{% block title %}Recipe Results | RecipeCraft{% endblock %}
+
+{% block content %}
+
+<section class="results-section">
+
+    <div class="section-heading">
+        <span class="eyebrow">YOUR PERSONALIZED RESULTS</span>
+        <h1>Recipes Made for You 🍽️</h1>
+        <p>Based on the ingredients available in your kitchen.</p>
+    </div>
+
+    <div class="search-summary">
+        <strong>Your ingredients:</strong>
+        <span>{{ ingredients }}</span>
+        <a href="{{ url_for('home') }}">← Search Again</a>
+    </div>
+
+    {% if recipes %}
+
+    <div class="results-count">
+        <h2>{{ recipes|length }} recipes found</h2>
+    </div>
+
+    <div class="recipe-grid">
+
+        {% for recipe in recipes %}
+
+        <article class="recipe-card">
+
+            <div class="recipe-card-top">
+                <span class="cuisine-tag">{{ recipe.cuisine }}</span>
+
+                {% if recipe.id in favorites %}
+                <span class="favorite-tag">❤️ Saved</span>
+                {% endif %}
+            </div>
+
+            <div class="recipe-card-content">
+
+                <h3>{{ recipe.name }}</h3>
+                <p class="recipe-description">{{ recipe.description }}</p>
+
+                <div class="match-container">
+                    <div class="match-label">
+                        <span>Ingredient Match</span>
+                        <strong>{{ recipe.match_percentage }}%</strong>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-fill"
+                             style="width: {{ recipe.match_percentage }}%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-meta">
+                    <span>⏱️ {{ recipe.total_time }} min</span>
+                    <span>🍴 {{ recipe.difficulty }}</span>
+                    <span>🔥 {{ recipe.nutrition.calories }} kcal</span>
+                </div>
+
+                <div class="ingredient-match">
+                    <p>
+                        <strong>Available:</strong>
+                        {{ recipe.matched_ingredients|join(', ') if recipe.matched_ingredients else 'None' }}
+                    </p>
+
+                    <p>
+                        <strong>Missing:</strong>
+                        {% if recipe.missing_ingredients %}
+                            <span class="missing-text">
+                                {{ recipe.missing_ingredients|join(', ') }}
+                            </span>
+                        {% else %}
+                            <span class="success-text">You have everything!</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}"
+                   class="primary-btn card-btn">
+                    View Recipe →
+                </a>
+
+            </div>
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        <div class="empty-icon">🥺</div>
+        <h2>No matching recipes found</h2>
+        <p>
+            Try adding more ingredients or changing your cuisine,
+            dietary preference, or cooking-time filters.
+        </p>
+        <a href="{{ url_for('home') }}" class="primary-btn">
+            Try Again
+        </a>
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

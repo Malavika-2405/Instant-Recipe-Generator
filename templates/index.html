@@ -1,0 +1,154 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-tag">YOUR SMART KITCHEN ASSISTANT</span>
+        <h1>Turn Your Ingredients Into <span>Delicious Meals.</span></h1>
+        <p>Tell us what's in your kitchen. Discover recipes you can cook right now!</p>
+
+        <form action="{{ url_for('search') }}" method="POST" class="search-form">
+
+            <div class="form-group">
+                <label for="ingredients">What's in your kitchen?</label>
+                <textarea
+                    id="ingredients"
+                    name="ingredients"
+                    placeholder="Example: rice, tomato, onion, potato, carrot..."
+                    rows="4"
+                    required
+                ></textarea>
+                <small>Separate ingredients using commas.</small>
+            </div>
+
+            <div class="filter-grid">
+
+                <div class="form-group">
+                    <label for="cuisine">Cuisine</label>
+                    <select name="cuisine" id="cuisine">
+                        <option value="All">All Cuisines</option>
+                        {% for cuisine in cuisines %}
+                            <option value="{{ cuisine }}">{{ cuisine }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="diet">Dietary Preference</label>
+                    <select name="diet" id="diet">
+                        <option value="All">All Preferences</option>
+                        {% for option in dietary_options %}
+                            <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_time">Maximum Cooking Time</label>
+                    <select name="max_time" id="max_time">
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60" selected>60 minutes</option>
+                        <option value="120">Any time (up to 120 min)</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Find My Recipes →
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('surprise') }}" class="surprise-link">
+            ✨ Surprise Me! Find a Random Recipe
+        </a>
+    </div>
+</section>
+<!-- AI FRIDGE IMAGE SCANNER -->
+<section class="features-section">
+    <div class="section-heading">
+        <span>POWERED BY GEMINI AI</span>
+        <h2>What's Inside Your Fridge? 📸</h2>
+        <p>Upload a photo of your fridge or ingredients. AI will identify them and suggest recipes.</p>
+    </div>
+
+    <div class="search-form" style="max-width: 650px; margin: 30px auto;">
+        <form action="{{ url_for('detect_ingredients_route') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="fridge_image">Upload Fridge / Ingredients Photo</label>
+
+                <input
+                    type="file"
+                    id="fridge_image"
+                    name="fridge_image"
+                    accept="image/jpeg,image/png,image/webp"
+                    required
+                >
+
+                <small>Supported formats: JPG, PNG and WEBP. Maximum size: 5 MB.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                ✨ Detect Ingredients with AI
+            </button>
+        </form>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="section-heading">
+        <span>COOK SMARTER</span>
+        <h2>Your Kitchen, Your Possibilities</h2>
+        <p>Everything you need to make cooking easier.</p>
+    </div>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">🥕</div>
+            <h3>Ingredient Matching</h3>
+            <p>Discover recipes based on ingredients you already have.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🛒</div>
+            <h3>Missing Ingredients</h3>
+            <p>Find out what ingredients you need to complete a recipe.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🥗</div>
+            <h3>Dietary Filters</h3>
+            <p>Choose recipes based on your food preferences.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">⏱️</div>
+            <h3>Time Filters</h3>
+            <p>Find meals that fit your available cooking time.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>Save Favourites</h3>
+            <p>Keep your favourite recipes in one place.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Shopping List</h3>
+            <p>Organize the ingredients you need to buy.</p>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="features-section">
+    <div class="section-heading">
+        <span>AI INGREDIENT RECOGNITION</span>
+        <h2>Your Ingredients Are Detected! 🥕</h2>
+        <p>Gemini AI identified these ingredients. Edit the list if needed.</p>
+    </div>
+
+    <div class="search-form" style="max-width: 750px; margin: 30px auto;">
+        <form action="{{ url_for('search_detected') }}" method="POST">
+
+            <div class="form-group">
+                <label for="ingredients">Detected Ingredients</label>
+                <textarea
+                    id="ingredients"
+                    name="ingredients"
+                    rows="5"
+                    required
+                >{{ ingredients | join(', ') }}</textarea>
+                <small>Separate ingredients using commas. You can add or remove items.</small>
+            </div>
+
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label for="cuisine">Cuisine</label>
+                    <select name="cuisine" id="cuisine">
+                        <option value="All">All Cuisines</option>
+                        {% for cuisine in cuisines %}
+                        <option value="{{ cuisine }}">{{ cuisine }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="diet">Dietary Preference</label>
+                    <select name="diet" id="diet">
+                        <option value="All">All Preferences</option>
+                        {% for option in dietary_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_time">Maximum Cooking Time</label>
+                    <select name="max_time" id="max_time">
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60" selected>60 minutes</option>
+                        <option value="120">Any time (up to 120 min)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Find Recipes With These Ingredients →
+            </button>
+
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('home') }}">← Back to Home</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
