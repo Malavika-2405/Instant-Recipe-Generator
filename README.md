@@ -45,23 +45,23 @@ The platform also includes recipe management features to make cooking easier and
 
 ![Homepage](screenshots/homepage.png)
 
-### 3. Recipe Recommendations
+### 2. Recipe Recommendations
 
 ![Recipe Results](screenshots/recipe-results.png)
 
-### 4. Recipe Details
+### 3. Recipe Details
 
 ![Recipe Details](screenshots/recipe-details.png)
 
-### 5. AI-Powered Fridge Image Detection
+### 4. AI-Powered Fridge Image Detection
 
 ![Fridge Detection](screenshots/fridge-detection.png)
 
-### 6. Favourite Recipes
+### 5. Favourite Recipes
 
 ![Favourite Recipes](screenshots/favorites.png)
 
-### 7. Shopping List
+### 6. Shopping List
 
 ![Shopping List](screenshots/shopping-list.png)
 
