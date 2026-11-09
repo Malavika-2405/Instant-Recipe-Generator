@@ -45,10 +45,6 @@ The platform also includes recipe management features to make cooking easier and
 
 ![Homepage](screenshots/homepage.png)
 
-### 2. Ingredient-Based Search
-
-![Ingredient Search](screenshots/ingredient-search.png)
-
 ### 3. Recipe Recommendations
 
 ![Recipe Results](screenshots/recipe-results.png)
